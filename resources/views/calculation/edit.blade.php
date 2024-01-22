@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th>Имя файла</th>
-                <td>{{$calculation->fileName}}</td>
+                <td>{{$calculation->inputFile}}</td>
             </tr>
             <tr>
                 <th>Отправитель</th>
@@ -69,6 +69,14 @@
             </tbody>
         </table>
     </form>
-
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 </div>
 @endsection

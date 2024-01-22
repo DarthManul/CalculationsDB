@@ -3,7 +3,7 @@
 
 @section('content')
     <h1>Создать новый расчёт</h1>
-<div><form action="{{route('calculation.store')}}" method="post">
+<div><form action="{{route('calculation.store')}}" method="post" enctype="multipart/form-data">
         @csrf
     <div class="mb-3">
         <label for="authorName" class="form-label">Ваше имя</label>
@@ -25,7 +25,7 @@
     </div>
     <div class="mb-3">
         <label for="formFile" class="form-label">Добавьте файл</label>
-        <input class="form-control" type="file" id="formFile" name="fileName">
+        <input class="form-control" type="file" id="formFile" name="inputFile">
     </div>
     <div class="mb-3">
         <label for="extra_info" class="form-label">Дополнительная информация</label>
@@ -33,5 +33,14 @@
     </div>
     <button type="submit" class="btn btn-primary">Отправить</button>
 </form>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 </div>
 @endsection

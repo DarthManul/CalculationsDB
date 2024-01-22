@@ -1,7 +1,14 @@
 <?php
 
+use App\Http\Controllers\{
+    AuthController,
+    CalculationsController,
+    MainPageController,
+    TokenController,
+};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,26 +21,32 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', 'App\\Http\\Controllers\\MainPageController@index') ->name('main.index');
-Route::get('/calculations', 'App\\Http\\Controllers\\CalculationsController@index') -> name('calculation.index');
-Route::get('/calculations/create', 'App\\Http\\Controllers\\CalculationsController@create') -> name('calculation.create');
-Route::post('/calculations', 'App\\Http\\Controllers\\CalculationsController@store') -> name('calculation.store');
-Route::get('/calculations/{calculation}', 'App\\Http\\Controllers\\CalculationsController@show') ->name('calculation.show');
-Route::get('/calculations/{calculation}/edit', 'App\\Http\\Controllers\\CalculationsController@edit') ->name('calculation.edit');
-Route::patch('/calculations/{calculation}/edit', 'App\\Http\\Controllers\\CalculationsController@update') ->name('calculation.update');
-Route::delete('/calculations/{calculation}/destroy', 'App\\Http\\Controllers\\CalculationsController@destroy') -> name('calculation.destroy');
+
+Route::get('/', [MainPageController::class, 'index'])
+    ->name('main.index');
 
 
-Route::get('/calculations/update', 'App\\Http\\Controllers\\Calculatons@update');
-Route::get('/calculations/delete', 'App\\Http\\Controllers\\Calculatons@delete');
-Route::get('/auth', 'App\\Http\\Controllers\\AuthController@index') -> name('auth.index');
-Route::get('/token', function (Request $request) {
-    $token = $request->session()->token();
-    $token = csrf_token();
-});
+Route::get('/calculations', [CalculationsController::class, 'index'])
+    -> name('calculation.index');
+Route::get('/calculations/create', [CalculationsController::class,'create'])
+    -> name('calculation.create');
+Route::post('/calculations', [CalculationsController::class, 'store'])
+    -> name('calculation.store');
+Route::get('/calculations/{calculation}', [CalculationsController::class, 'show'])
+    ->name('calculation.show');
+Route::get('/calculations/{calculation}/edit', [CalculationsController::class, 'edit'])
+    ->name('calculation.edit');
+Route::patch('/calculations/{calculation}/edit', [CalculationsController::class, 'update'])
+    ->name('calculation.update');
+Route::delete('/calculations/{calculation}/destroy', [CalculationsController::class, 'destroy'])
+    -> name('calculation.destroy');
+
+
+Route::get('/auth', [AuthController::class, 'index']) -> name('auth.index');
+
+
+Route::get('/token/{request}', [TokenController::class, 'index']);
 
 
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

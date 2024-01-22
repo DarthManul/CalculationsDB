@@ -6,7 +6,7 @@
     <div>
         <button type="button" class="btn"><a href={{route('calculation.create')}}>Создать новый расчёт!</a> </button>
         <H1>Список всех расчётов</H1>
-        @if(sizeof($calculations)>1)
+        @if(sizeof($calculations)>=1)
             <table class="table">
                 <thead>
                     <tr>
